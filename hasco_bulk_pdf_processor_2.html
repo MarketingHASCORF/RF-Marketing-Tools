@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>HASCO Bulk Datasheet Processor</title>
+<style>
+:root {
+  --navy:#1E2A5E; --orange:#D4621A; --green:#2e7d45; --red:#b5382a;
+  --amber:#c07a10; --gray:#8a8070; --bg:#F7F6F3; --surface:#fff;
+  --border:#E0DDD8; --text:#1a1510; --muted:#6b6560;
+  --green-lt:#EFF8F2; --red-lt:#FDF2F2; --amber-lt:#FEF3E2; --navy-lt:#E8EBF5;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:var(--bg);color:var(--text);font-size:14px}
+.header{background:var(--navy);color:white;padding:20px 28px 16px}
+.header-tag{font-size:10px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.45);margin-bottom:6px}
+.header h1{font-size:22px;font-weight:700;margin-bottom:6px}
+.header-meta{display:flex;gap:10px;flex-wrap:wrap}
+.header-badge{background:rgba(255,255,255,.12);border-radius:20px;padding:3px 12px;font-size:12px;color:rgba(255,255,255,.8)}
+.orange-bar{height:4px;background:var(--orange)}
+.body{padding:24px 28px;max-width:1060px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:10px;margin-bottom:20px;overflow:hidden}
+.card-header{padding:13px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.card-title{font-size:14px;font-weight:700;color:var(--navy)}
+.card-body{padding:18px}
+.dropzone{border:2px dashed var(--border);border-radius:8px;padding:32px 20px;text-align:center;cursor:pointer;transition:all .2s;background:var(--bg)}
+.dropzone:hover,.dropzone.drag-over{border-color:var(--navy);background:#f0f2fa}
+.dz-icon{font-size:34px;margin-bottom:10px;opacity:.4}
+.dropzone h3{font-size:15px;color:var(--navy);margin-bottom:5px}
+.dropzone p{font-size:13px;color:var(--muted)}
+#file-input{display:none}
+.file-list{display:flex;flex-direction:column;gap:5px;margin-top:14px;max-height:280px;overflow-y:auto}
+.file-item{display:flex;align-items:center;gap:10px;background:var(--bg);border:1px solid var(--border);border-radius:6px;padding:7px 12px}
+.file-icon{font-size:16px;flex-shrink:0}
+.file-info{flex:1;min-width:0}
+.file-name{font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.file-size{font-size:11px;color:var(--muted)}
+.file-status{font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px;flex-shrink:0;min-width:76px;text-align:center}
+.status-pending  {background:#f0ede8;color:var(--gray)}
+.status-processing{background:var(--amber-lt);color:var(--amber)}
+.status-done     {background:var(--green-lt);color:var(--green)}
+.status-error    {background:var(--red-lt);color:var(--red)}
+.status-paused   {background:var(--navy-lt);color:var(--navy)}
+.file-remove{background:none;border:none;cursor:pointer;color:var(--muted);font-size:15px;padding:0 4px;flex-shrink:0}
+.file-remove:hover{color:var(--red)}
+.progress-wrap{margin-top:14px}
+.progress-bar-bg{background:var(--border);border-radius:6px;height:10px;overflow:hidden}
+.progress-bar-fill{height:100%;background:var(--navy);border-radius:6px;transition:width .4s;width:0%}
+.progress-label{font-size:12px;color:var(--muted);margin-top:6px;display:flex;justify-content:space-between}
+.btn{padding:8px 18px;border-radius:6px;font-size:13px;cursor:pointer;border:1px solid var(--border);background:var(--surface);color:var(--text);font-family:Arial,sans-serif;transition:all .15s;white-space:nowrap}
+.btn:hover{background:var(--bg)}
+.btn:disabled{opacity:.4;cursor:not-allowed}
+.btn-primary{background:var(--navy);color:white;border-color:var(--navy)}
+.btn-primary:hover:not(:disabled){background:#162248}
+.btn-orange{background:var(--orange);color:white;border-color:var(--orange)}
+.btn-orange:hover:not(:disabled){background:#b85518}
+.btn-amber{background:var(--amber);color:white;border-color:var(--amber)}
+.btn-amber:hover:not(:disabled){background:#9c6508}
+.btn-green{background:var(--green);color:white;border-color:var(--green)}
+.btn-green:hover:not(:disabled){background:#246037}
+.btn-row{display:flex;gap:8px;margin-top:16px;flex-wrap:wrap;align-items:center}
+.stats-row{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:20px}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:12px 14px;text-align:center}
+.stat-val{font-size:26px;font-weight:700;color:var(--navy);line-height:1}
+.stat-label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;margin-top:4px}
+.restore-banner{background:var(--green-lt);border:1px solid #c0ddb0;border-radius:8px;padding:10px 14px;display:flex;align-items:center;gap:10px;margin-bottom:16px;font-size:13px;color:var(--green)}
+.results-wrap{overflow-x:auto;max-height:320px;overflow-y:auto}
+table{width:100%;border-collapse:collapse;font-size:12px}
+th{background:var(--navy);color:white;padding:8px 10px;text-align:left;white-space:nowrap;font-size:11px;letter-spacing:.4px;position:sticky;top:0;z-index:1}
+td{padding:7px 10px;border-bottom:1px solid var(--border);vertical-align:middle;white-space:nowrap}
+tr:hover td{background:#fafaf8}
+td.pn{font-family:monospace;font-weight:700;color:var(--navy)}
+.log{background:#1a1510;border-radius:6px;padding:12px 14px;font-family:monospace;font-size:11px;color:#b0aa98;max-height:200px;overflow-y:auto;line-height:1.8}
+.log .ok  {color:#6fcf97}
+.log .err {color:#eb5757}
+.log .info{color:#7fc4f7}
+.log .warn{color:#f2c94c}
+.pill{display:inline-block;padding:2px 9px;border-radius:12px;font-size:11px;font-weight:700;background:var(--navy-lt);color:var(--navy)}
+.hidden{display:none!important}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-tag">hascoRF Internal Tool</div>
+  <h1>Bulk Datasheet Processor</h1>
+  <div class="header-meta">
+    <span class="header-badge">Up to 500 PDFs per session</span>
+    <span class="header-badge">Pause &amp; Resume</span>
+    <span class="header-badge">Auto-saves every 5 files</span>
+    <span class="header-badge">Export CSV anytime</span>
+    <span class="header-badge">Retry failed files</span>
+  </div>
+</div>
+<div class="orange-bar"></div>
+
+<div class="body">
+
+  <div class="restore-banner hidden" id="restore-banner">
+    <strong>Saved session found</strong>&nbsp;—&nbsp;<span id="restore-desc"></span>
+    <button class="btn btn-green" style="margin-left:auto;padding:5px 12px;font-size:12px" onclick="restoreSession()">Restore</button>
+    <button class="btn" style="padding:5px 12px;font-size:12px" onclick="document.getElementById('restore-banner').classList.add('hidden')">Dismiss</button>
+  </div>
+
+  <div class="stats-row">
+    <div class="stat"><div class="stat-val" id="s-total">0</div><div class="stat-label">Queued</div></div>
+    <div class="stat"><div class="stat-val" id="s-done" style="color:var(--green)">0</div><div class="stat-label">Done</div></div>
+    <div class="stat"><div class="stat-val" id="s-errors" style="color:var(--red)">0</div><div class="stat-label">Errors</div></div>
+    <div class="stat"><div class="stat-val" id="s-rows" style="color:var(--orange)">0</div><div class="stat-label">CSV rows</div></div>
+    <div class="stat"><div class="stat-val" id="s-eta" style="color:var(--muted);font-size:18px">--</div><div class="stat-label">Est. remaining</div></div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">Step 1 — Upload Datasheets</span>
+      <span class="pill" id="file-count-pill">0 / 500 files</span>
+    </div>
+    <div class="card-body">
+      <div class="dropzone" id="dropzone" onclick="document.getElementById('file-input').click()">
+        <div class="dz-icon">PDF</div>
+        <h3>Drop PDF datasheets here</h3>
+        <p>or click to browse &nbsp;·&nbsp; up to 500 files &nbsp;·&nbsp; any HASCO product datasheet</p>
+      </div>
+      <input type="file" id="file-input" accept=".pdf" multiple>
+      <div class="file-list" id="file-list"></div>
+      <div class="progress-wrap hidden" id="progress-wrap">
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="progress-fill"></div></div>
+        <div class="progress-label"><span id="progress-text">Waiting...</span><span id="progress-eta"></span></div>
+      </div>
+      <div class="btn-row">
+        <button class="btn btn-primary" id="process-btn" onclick="startProcessing()" disabled>Process All PDFs</button>
+        <button class="btn btn-amber hidden" id="pause-btn" onclick="togglePause()">Pause</button>
+        <button class="btn btn-orange" id="export-btn" onclick="exportCSV()" disabled>Export CSV</button>
+        <button class="btn hidden" id="retry-btn" onclick="retryErrors()">Retry Errors</button>
+        <button class="btn" id="clear-btn" onclick="clearAll()">Clear All</button>
+        <span id="save-indicator" style="font-size:12px;color:var(--green);margin-left:4px"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-header">
+      <span class="card-title">Processing Log</span>
+      <button class="btn" style="padding:3px 10px;font-size:11px" onclick="document.getElementById('log').innerHTML=''">Clear</button>
+    </div>
+    <div class="card-body" style="padding:10px">
+      <div class="log" id="log"><span class="info">Ready. Upload PDFs to begin. Saved sessions restore automatically on reload.</span></div>
+    </div>
+  </div>
+
+  <div class="card hidden" id="results-card">
+    <div class="card-header">
+      <span class="card-title">Extracted Data Preview</span>
+      <span style="font-size:12px;color:var(--muted)" id="preview-count"></span>
+    </div>
+    <div class="results-wrap">
+      <table><thead id="results-head"></thead><tbody id="results-body"></tbody></table>
+    </div>
+  </div>
+
+</div>
+<script>
+const FIELDS=["part_number","product_name","subcategory","series","connector_a","connector_b","connector_a_gender","connector_b_gender","frequency_range_ghz","max_freq_ghz","vswr_max","insertion_loss_formula","bending_phase_stability","phase_stability","insulation_resistance","capacitance","rf_leakage_db","temp_range","bend_radius_mm","impedance_ohms","durability_cycles","armor_stress_tolerance","velocity_pct","screening_effectiveness_db","armor_outer_diameter_mm","weight_kg_per_m","connector_body_material","connector_dielectric","connector_center_contact","cable_center_conductor","cable_dielectric","inner_shield","middle_shield","outer_shield","jacket","inner_armor","strengthened_shield","anti_twist_layer","outer_armor","rohs_compliant","cage_code","drawing_rev","product_url","datasheet_url","image_url","price_usd","inventory_tier","notes"];
+const PREVIEW_COLS=["part_number","product_name","connector_a","connector_b","connector_a_gender","connector_b_gender","frequency_range_ghz","vswr_max","impedance_ohms","temp_range","rohs_compliant"];
+const MAX_FILES=500,STORAGE_KEY="hasco_processor_v2",DELAY_MS=700;
+
+let files=[],results=[],processing=false,paused=false,pauseResolve=null,startTime=null,processedCount=0;
+
+window.addEventListener("load",()=>{
+  try{
+    const s=JSON.parse(localStorage.getItem(STORAGE_KEY)||"{}");
+    if(s.results&&s.results.length>0){
+      document.getElementById("restore-banner").classList.remove("hidden");
+      document.getElementById("restore-desc").textContent=s.results.length+" products extracted on "+s.date;
+    }
+  }catch(e){}
+});
+
+function restoreSession(){
+  try{
+    const s=JSON.parse(localStorage.getItem(STORAGE_KEY));
+    results=s.results||[];
+    renderResultsTable();updateStats();
+    document.getElementById("export-btn").disabled=false;
+    document.getElementById("restore-banner").classList.add("hidden");
+    log("ok","Session restored — "+results.length+" products loaded.");
+  }catch(e){log("err","Restore failed: "+e.message);}
+}
+
+function saveSession(){
+  try{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify({results,date:new Date().toLocaleString()}));
+    const ind=document.getElementById("save-indicator");
+    ind.textContent="Auto-saved";
+    setTimeout(()=>{ind.textContent="";},2000);
+  }catch(e){log("warn","Auto-save failed: "+e.message);}
+}
+
+const dz=document.getElementById("dropzone");
+dz.addEventListener("dragover",e=>{e.preventDefault();dz.classList.add("drag-over");});
+dz.addEventListener("dragleave",()=>dz.classList.remove("drag-over"));
+dz.addEventListener("drop",e=>{e.preventDefault();dz.classList.remove("drag-over");addFiles([...e.dataTransfer.files]);});
+document.getElementById("file-input").addEventListener("change",e=>{addFiles([...e.target.files]);e.target.value="";});
+
+function addFiles(newFiles){
+  const pdfs=newFiles.filter(f=>f.type==="application/pdf"||f.name.endsWith(".pdf"));
+  const rem=MAX_FILES-files.length;
+  if(rem<=0){log("err","500 file limit reached. Clear files first.");return;}
+  const toAdd=pdfs.slice(0,rem);
+  if(pdfs.length>rem)log("warn","Added "+toAdd.length+" of "+pdfs.length+" (500 max).");
+  toAdd.forEach(f=>{
+    if(!files.find(x=>x.name===f.name&&x.size===f.size))
+      files.push({file:f,name:f.name,size:f.size,status:"pending",result:null});
+  });
+  renderFileList();updateStats();
+}
+
+function renderFileList(){
+  document.getElementById("file-list").innerHTML=files.map((f,i)=>`
+    <div class="file-item" id="fi-${i}">
+      <span class="file-icon">PDF</span>
+      <div class="file-info">
+        <div class="file-name" title="${esc(f.name)}">${esc(f.name)}</div>
+        <div class="file-size">${(f.size/1024).toFixed(1)} KB</div>
+      </div>
+      <span class="file-status status-${f.status}" id="fs-${i}">${f.status}</span>
+      <button class="file-remove" onclick="removeFile(${i})" ${processing?"disabled":""}>x</button>
+    </div>`).join("");
+  document.getElementById("file-count-pill").textContent=files.length+" / 500 files";
+  document.getElementById("process-btn").disabled=files.length===0||processing;
+  const hasErr=files.some(f=>f.status==="error");
+  document.getElementById("retry-btn").classList.toggle("hidden",!hasErr);
+}
+
+function removeFile(i){if(processing)return;files.splice(i,1);renderFileList();updateStats();}
+
+async function startProcessing(){
+  if(processing||files.length===0)return;
+  const pending=files.filter(f=>f.status==="pending");
+  if(pending.length===0){log("warn","No pending files.");return;}
+  processing=true;paused=false;startTime=Date.now();processedCount=0;
+  document.getElementById("process-btn").disabled=true;
+  document.getElementById("pause-btn").classList.remove("hidden");
+  document.getElementById("clear-btn").disabled=true;
+  document.getElementById("progress-wrap").classList.remove("hidden");
+  log("info","Starting — "+pending.length+" file"+(pending.length>1?"s":"")+" queued.");
+
+  for(let i=0;i<files.length;i++){
+    const f=files[i];
+    if(f.status!=="pending")continue;
+    if(paused){
+      log("warn","Paused.");setFileStatus(i,"paused");
+      await waitForResume();setFileStatus(i,"pending");
+    }
+    setFileStatus(i,"processing");updateProgress();
+    log("info","["+(processedCount+1)+"/"+pending.length+"] "+f.name+"...");
+    try{
+      const text=await extractPdfText(f.file);
+      const data=await extractWithClaude(text,f.name);
+      f.result=data;f.status="done";results.push(data);
+      setFileStatus(i,"done");processedCount++;
+      log("ok","  + "+data.part_number+" — "+Object.values(data).filter(v=>v).length+" fields");
+      if(processedCount%5===0)saveSession();
+    }catch(err){
+      f.status="error";setFileStatus(i,"error");processedCount++;
+      log("err","  x "+f.name+": "+err.message);
+    }
+    updateStats();
+    if(i<files.length-1)await sleep(DELAY_MS);
+  }
+
+  saveSession();
+  const dc=files.filter(f=>f.status==="done").length,ec=files.filter(f=>f.status==="error").length;
+  log("ok","Complete — "+dc+" succeeded, "+ec+" errors.");
+  processing=false;paused=false;
+  document.getElementById("process-btn").disabled=false;
+  document.getElementById("pause-btn").classList.add("hidden");
+  document.getElementById("clear-btn").disabled=false;
+  document.getElementById("export-btn").disabled=results.length===0;
+  document.getElementById("s-eta").textContent="--";
+  const hasErr=files.some(f=>f.status==="error");
+  document.getElementById("retry-btn").classList.toggle("hidden",!hasErr);
+  if(results.length>0)renderResultsTable();
+  updateProgress();
+}
+
+function togglePause(){
+  const btn=document.getElementById("pause-btn");
+  if(!paused){
+    paused=true;btn.textContent="Resume";
+    btn.classList.remove("btn-amber");btn.classList.add("btn-green");
+    log("warn","Pausing after current file...");
+  }else{
+    paused=false;btn.textContent="Pause";
+    btn.classList.remove("btn-green");btn.classList.add("btn-amber");
+    log("info","Resumed.");
+    if(pauseResolve){pauseResolve();pauseResolve=null;}
+  }
+}
+
+function waitForResume(){return new Promise(r=>{pauseResolve=r;});}
+
+async function retryErrors(){
+  files.filter(f=>f.status==="error").forEach(f=>{f.status="pending";});
+  renderFileList();log("info","Error files reset — retrying.");
+  await startProcessing();
+}
+
+async function extractPdfText(file){
+  const b64=await fileToBase64(file);
+  const res=await fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,
+      messages:[{role:"user",content:[
+        {type:"document",source:{type:"base64",media_type:"application/pdf",data:b64}},
+        {type:"text",text:"Extract ALL text from this datasheet PDF exactly as it appears. Return only the raw text, no commentary."}
+      ]}]
+    })
+  });
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error("PDF read "+res.status+": "+(e.error?.message||res.statusText));}
+  const d=await res.json();
+  return d.content.filter(b=>b.type==="text").map(b=>b.text).join("\n");
+}
+
+async function extractWithClaude(text,filename){
+  const prompt=`You are extracting structured data from an RF/microwave component datasheet for HASCO Components.
+
+Extract every available field and return ONLY a valid JSON object with these exact keys (use "" for any missing field):
+${JSON.stringify(FIELDS)}
+
+Field guidance:
+- part_number: model/part number (e.g. HLL185R-VP-VJ-L)
+- product_name: full descriptive title from the datasheet
+- subcategory: infer from product type (Ruggedized Cables / SMA Adapters / Attenuators / Terminations / Phase Stable Cables / Low Loss Cables etc.)
+- series: product family prefix (e.g. HLL185R, HCA, HAT)
+- connector_a / connector_b: interface type (1.85mm / SMA / Type N / 2.92mm / 2.4mm / 1.0mm / 0.8mm etc.)
+- connector_a_gender / connector_b_gender: Male or Female
+- frequency_range_ghz: e.g. "DC - 67"
+- max_freq_ghz: numeric max only e.g. "67"
+- vswr_max: e.g. "1.50:1"
+- insertion_loss_formula: formula or value as stated
+- bending_phase_stability / phase_stability / insulation_resistance / capacitance: as stated
+- rf_leakage_db: numeric dB value
+- temp_range: e.g. "-55C to 125C"
+- bend_radius_mm: numeric mm
+- impedance_ohms: usually "50"
+- durability_cycles: e.g. ">5000"
+- armor_stress_tolerance / velocity_pct / screening_effectiveness_db / armor_outer_diameter_mm / weight_kg_per_m: if present
+- All material fields connector_body_material through outer_armor: exact material descriptions from the datasheet
+- rohs_compliant: Yes or No
+- cage_code: 5-char alphanumeric e.g. "0T8L4"
+- drawing_rev: revision letter e.g. "B"
+- notes: any revision history
+
+Return ONLY valid JSON. No markdown, no backticks, no explanation.
+
+DATASHEET TEXT:
+${text.substring(0,8000)}`;
+
+  const res=await fetch("https://api.anthropic.com/v1/messages",{
+    method:"POST",headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({model:"claude-sonnet-4-20250514",max_tokens:1000,
+      messages:[{role:"user",content:prompt}]
+    })
+  });
+  if(!res.ok){const e=await res.json().catch(()=>({}));throw new Error("AI "+res.status+": "+(e.error?.message||res.statusText));}
+  const d=await res.json();
+  const raw=d.content.filter(b=>b.type==="text").map(b=>b.text).join("");
+  const clean=raw.replace(/```json|```/g,"").trim();
+  let parsed;
+  try{parsed=JSON.parse(clean);}
+  catch(e){throw new Error("JSON parse failed: "+e.message);}
+  const result={};
+  FIELDS.forEach(f=>result[f]=(parsed[f]!==undefined&&parsed[f]!==null)?String(parsed[f]):"");
+  if(!result.part_number)result.part_number=filename.replace(/\.pdf$/i,"");
+  return result;
+}
+
+function updateProgress(){
+  const total=files.length,done=files.filter(f=>f.status==="done"||f.status==="error").length;
+  const pct=total>0?Math.round(done/total*100):0;
+  document.getElementById("progress-fill").style.width=pct+"%";
+  document.getElementById("progress-text").textContent=done+" of "+total+" files processed ("+pct+"%)";
+  if(startTime&&processedCount>0){
+    const rate=processedCount/((Date.now()-startTime)/1000);
+    const rem=files.filter(f=>f.status==="pending").length;
+    const eta=rem/rate;
+    const etaStr=eta>0?fmtDur(eta):"";
+    document.getElementById("progress-eta").textContent=etaStr?"ETA: "+etaStr:"";
+    document.getElementById("s-eta").textContent=etaStr||"--";
+  }
+}
+
+function fmtDur(s){
+  if(s<60)return Math.round(s)+"s";
+  if(s<3600)return Math.floor(s/60)+"m "+Math.round(s%60)+"s";
+  return Math.floor(s/3600)+"h "+Math.floor(s%3600/60)+"m";
+}
+
+function renderResultsTable(){
+  document.getElementById("results-card").classList.remove("hidden");
+  document.getElementById("preview-count").textContent=results.length+" product"+(results.length!==1?"s":"")+" · key columns · full data in CSV";
+  document.getElementById("results-head").innerHTML="<tr>"+PREVIEW_COLS.map(c=>"<th>"+c.replace(/_/g," ")+"</th>").join("")+"</tr>";
+  document.getElementById("results-body").innerHTML=results.map(r=>
+    "<tr>"+PREVIEW_COLS.map((c,i)=>"<td"+(i===0?' class="pn"':"")+">"+esc(r[c]||"")+"</td>").join("")+"</tr>"
+  ).join("");
+}
+
+function exportCSV(){
+  if(results.length===0){log("warn","No data to export.");return;}
+  const rows=[FIELDS.join(",")];
+  results.forEach(r=>rows.push(FIELDS.map(f=>'"'+( r[f]||"").replace(/"/g,'""')+'"').join(",")));
+  const blob=new Blob([rows.join("\r\n")],{type:"text/csv;charset=utf-8;"});
+  const a=document.createElement("a");
+  a.href=URL.createObjectURL(blob);
+  a.download="hasco_datasheets_"+new Date().toISOString().slice(0,10)+".csv";
+  a.click();
+  log("ok","CSV exported — "+results.length+" rows, "+FIELDS.length+" columns.");
+}
+
+function clearAll(){
+  if(processing){log("warn","Pause first before clearing.");return;}
+  files=[];results=[];
+  renderFileList();updateStats();
+  document.getElementById("results-card").classList.add("hidden");
+  document.getElementById("export-btn").disabled=true;
+  document.getElementById("retry-btn").classList.add("hidden");
+  document.getElementById("progress-wrap").classList.add("hidden");
+  document.getElementById("s-eta").textContent="--";
+  log("info","Cleared.");
+}
+
+function updateStats(){
+  document.getElementById("s-total").textContent=files.length;
+  document.getElementById("s-done").textContent=files.filter(f=>f.status==="done").length;
+  document.getElementById("s-errors").textContent=files.filter(f=>f.status==="error").length;
+  document.getElementById("s-rows").textContent=results.length;
+}
+
+function setFileStatus(i,status){
+  const el=document.getElementById("fs-"+i);
+  if(el){el.textContent=status;el.className="file-status status-"+status;}
+  if(files[i])files[i].status=status;
+}
+
+function log(type,msg){
+  const el=document.getElementById("log");
+  const line=document.createElement("div");
+  line.className=type;
+  const t=new Date().toLocaleTimeString("en-US",{hour12:false,hour:"2-digit",minute:"2-digit",second:"2-digit"});
+  line.textContent="["+t+"] "+msg;
+  el.appendChild(line);el.scrollTop=el.scrollHeight;
+}
+
+function fileToBase64(file){
+  return new Promise((res,rej)=>{
+    const r=new FileReader();
+    r.onload=()=>res(r.result.split(",")[1]);
+    r.onerror=()=>rej(new Error("File read failed"));
+    r.readAsDataURL(file);
+  });
+}
+
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+function sleep(ms){return new Promise(r=>setTimeout(r,ms));}
+</script>
+</body>
+</html>
