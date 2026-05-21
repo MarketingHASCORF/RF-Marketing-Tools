@@ -1,0 +1,38 @@
+name: Anthropic API Proxy
+
+on:
+  workflow_dispatch:
+    inputs:
+      payload:
+        description: 'JSON payload to forward to Anthropic API'
+        required: true
+        type: string
+      request_id:
+        description: 'Unique request ID for response tracking'
+        required: true
+        type: string
+
+jobs:
+  proxy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Call Anthropic API
+        id: api_call
+        run: |
+          RESPONSE=$(curl -s -X POST "https://api.anthropic.com/v1/messages" \
+            -H "Content-Type: application/json" \
+            -H "x-api-key: ${{ secrets.ANTHROPIC_API_KEY }}" \
+            -H "anthropic-version: 2023-06-01" \
+            -H "anthropic-beta: pdfs-2024-09-25" \
+            -d '${{ github.event.inputs.payload }}')
+          
+          # Save response to file to handle large outputs
+          echo "$RESPONSE" > response.json
+          echo "response_file=response.json" >> $GITHUB_OUTPUT
+
+      - name: Upload response as artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: response-${{ github.event.inputs.request_id }}
+          path: response.json
+          retention-days: 1
