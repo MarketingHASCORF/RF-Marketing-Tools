@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>GigaProbes® Differential Probes | HASCO RF Solutions — Authorized Signal Microwave Distribution Partner</title>
+<meta name="description" content="True 100 Ohm differential GigaProbes® from Signal Microwave, now available through HASCO RF Solutions. FPP probe series from 40 to 110 GHz. Request a quote today.">
+<style>
+  :root{
+    --navy:#1e2170;
+    --navy-dark:#14164e;
+    --orange:#f47b20;
+    --orange-dark:#d9660e;
+    --purple:#5b2d90;
+    --ink:#22242e;
+    --gray:#5b5e6b;
+    --bg:#f5f6fa;
+    --white:#ffffff;
+    --line:#e2e4ee;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Segoe UI',Arial,Helvetica,sans-serif;color:var(--ink);background:var(--white);line-height:1.55;}
+  .wrap{max-width:1120px;margin:0 auto;padding:0 24px;}
+  h1,h2,h3{line-height:1.15;}
+  .eyebrow{display:inline-block;font-size:.78rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--orange);margin-bottom:12px;}
+  .btn{display:inline-block;padding:14px 32px;border-radius:4px;font-weight:700;font-size:1rem;text-decoration:none;transition:background .15s;}
+  .btn-orange{background:var(--orange);color:#fff;}
+  .btn-orange:hover{background:var(--orange-dark);}
+  .btn-outline{border:2px solid #fff;color:#fff;margin-left:12px;}
+  .btn-outline:hover{background:rgba(255,255,255,.12);}
+
+  /* ===== Site header (recreated from hasco-inc.com) ===== */
+  .util{background:var(--navy-dark);color:#cfd2e8;font-size:.82rem;padding:7px 0;}
+  .util .wrap{display:flex;justify-content:flex-end;align-items:center;gap:22px;flex-wrap:wrap;}
+  .util a{color:#fff;text-decoration:none;font-weight:600;}
+  .util a:hover{color:var(--orange);}
+  .util .sep{color:#6a6d99;}
+  .masthead{background:#fff;padding:20px 0;}
+  .masthead .wrap{display:flex;align-items:center;justify-content:space-between;gap:28px;flex-wrap:wrap;}
+  .masthead .brand{display:flex;align-items:center;gap:14px;}
+  .masthead .brand img{height:52px;width:auto;display:block;}
+  .masthead .brand small{display:block;font-size:.72rem;font-weight:700;color:var(--gray);letter-spacing:.09em;text-transform:uppercase;margin-top:4px;}
+  .searchbox{flex:1;max-width:420px;display:flex;}
+  .searchbox input{flex:1;padding:11px 14px;border:1.5px solid var(--line);border-right:none;border-radius:4px 0 0 4px;font-size:.92rem;outline:none;}
+  .searchbox input:focus{border-color:var(--navy);}
+  .searchbox button{background:var(--orange);color:#fff;border:none;padding:0 18px;border-radius:0 4px 4px 0;font-size:1.05rem;cursor:pointer;}
+  .mast-contact{text-align:right;font-size:.9rem;line-height:1.8;}
+  .mast-contact a{color:var(--navy);text-decoration:none;font-weight:700;}
+  .mast-contact a:hover{color:var(--orange);}
+  .mainnav{background:var(--navy);}
+  .mainnav .wrap{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;}
+  .mainnav ul{list-style:none;display:flex;flex-wrap:wrap;}
+  .mainnav li a{display:block;color:#fff;text-decoration:none;font-weight:700;font-size:.88rem;letter-spacing:.05em;padding:15px 20px;text-transform:uppercase;}
+  .mainnav li a:hover{background:var(--navy-dark);color:var(--orange);}
+  .mainnav li a .caret{font-size:.65rem;opacity:.7;margin-left:4px;}
+  .mainnav .nav-rfq{background:var(--orange);}
+  .mainnav .nav-rfq:hover{background:var(--orange-dark);color:#fff;}
+  .partner-strip{background:#eef0fa;border-bottom:1px solid var(--line);padding:9px 0;font-size:.84rem;color:var(--navy);}
+  .partner-strip .wrap{display:flex;align-items:center;justify-content:center;gap:10px;flex-wrap:wrap;text-align:center;}
+  .partner-strip .sm{background:var(--navy);color:#fff;font-weight:800;padding:4px 12px;border-radius:3px;font-size:.78rem;letter-spacing:.04em;}
+
+  /* Hero */
+  .hero{background:linear-gradient(135deg,var(--navy-dark) 0%,var(--navy) 55%,#2c2f8f 100%);color:#fff;padding:72px 0 64px;}
+  .hero .wrap{display:grid;grid-template-columns:1.15fr .85fr;gap:48px;align-items:center;}
+  .hero h1{font-size:2.6rem;margin-bottom:18px;}
+  .hero h1 em{font-style:normal;color:var(--orange);}
+  .hero p.lead{font-size:1.15rem;color:#d9dbef;margin-bottom:28px;max-width:34em;}
+  .hero-stats{display:flex;gap:32px;margin-top:36px;flex-wrap:wrap;}
+  .hero-stats div{border-left:3px solid var(--orange);padding-left:14px;}
+  .hero-stats strong{display:block;font-size:1.5rem;}
+  .hero-stats span{font-size:.82rem;color:#b9bcdc;}
+  .hero-visual{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);border-radius:8px;padding:28px;text-align:center;}
+  .hero-visual .probe-art{font-size:.85rem;color:#cfd2e8;margin-top:14px;}
+  .hero-visual .banner{background:var(--orange);color:#fff;font-weight:800;letter-spacing:.06em;padding:10px;border-radius:4px;text-transform:uppercase;font-size:.95rem;}
+  .img-placeholder{background:rgba(255,255,255,.1);border:2px dashed rgba(255,255,255,.35);border-radius:6px;height:220px;display:flex;align-items:center;justify-content:center;color:#aab;font-size:.85rem;margin-bottom:16px;}
+
+  /* Section base */
+  section{padding:64px 0;}
+  section.alt{background:var(--bg);}
+  .sec-head{max-width:720px;margin-bottom:40px;}
+  .sec-head h2{font-size:1.9rem;color:var(--navy);margin-bottom:12px;}
+  .sec-head p{color:var(--gray);font-size:1.05rem;}
+
+  /* Product table */
+  table{width:100%;border-collapse:collapse;background:#fff;box-shadow:0 1px 4px rgba(20,22,78,.08);border-radius:8px;overflow:hidden;}
+  th{background:var(--navy);color:#fff;text-align:left;padding:14px 18px;font-size:.85rem;letter-spacing:.05em;text-transform:uppercase;}
+  td{padding:14px 18px;border-bottom:1px solid var(--line);font-size:.95rem;}
+  tr:last-child td{border-bottom:none;}
+  td.freq{font-weight:800;color:var(--navy);white-space:nowrap;}
+  .pill{display:inline-block;background:#eef0fa;color:var(--navy);font-size:.78rem;font-weight:700;padding:3px 10px;border-radius:20px;margin-right:6px;}
+  .rfq-link{color:var(--orange);font-weight:700;text-decoration:none;white-space:nowrap;}
+  .rfq-link:hover{text-decoration:underline;}
+
+  /* Feature grid */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .grid-4{grid-template-columns:repeat(4,1fr);}
+  .card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:26px;box-shadow:0 1px 3px rgba(20,22,78,.05);}
+  .card h3{font-size:1.05rem;color:var(--navy);margin-bottom:8px;}
+  .card p{font-size:.92rem;color:var(--gray);}
+  .card .icon{width:44px;height:44px;border-radius:8px;background:var(--orange);color:#fff;display:flex;align-items:center;justify-content:center;font-size:1.3rem;font-weight:800;margin-bottom:16px;}
+  .card.navy .icon{background:var(--navy);}
+
+  /* Applications */
+  .app-list{display:grid;grid-template-columns:repeat(2,1fr);gap:14px 40px;max-width:860px;}
+  .app-list div{background:#fff;border-left:4px solid var(--orange);padding:14px 18px;box-shadow:0 1px 3px rgba(20,22,78,.06);border-radius:0 6px 6px 0;font-size:.95rem;}
+  .app-list strong{color:var(--navy);}
+
+  /* Partnership */
+  .partnership{background:var(--navy);color:#fff;}
+  .partnership .wrap{display:grid;grid-template-columns:1.1fr .9fr;gap:56px;align-items:center;}
+  .partnership h2{font-size:1.9rem;margin-bottom:16px;}
+  .partnership h2 span{color:var(--orange);}
+  .partnership p{color:#d0d3ea;margin-bottom:16px;}
+  .trust-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  .trust-grid div{background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.16);border-radius:8px;padding:20px;}
+  .trust-grid strong{display:block;color:var(--orange);font-size:.8rem;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px;}
+  .trust-grid span{font-size:.9rem;color:#dfe1f2;}
+
+  /* Test boards */
+  .board-flex{display:grid;grid-template-columns:1fr 1fr;gap:24px;}
+
+  /* RFQ */
+  .rfq{background:linear-gradient(135deg,var(--orange) 0%,var(--orange-dark) 100%);color:#fff;text-align:center;}
+  .rfq h2{font-size:2rem;margin-bottom:12px;}
+  .rfq p{max-width:40em;margin:0 auto 28px;font-size:1.05rem;}
+  .rfq form{max-width:760px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:14px;text-align:left;}
+  .rfq input,.rfq select,.rfq textarea{width:100%;padding:13px 14px;border:none;border-radius:5px;font-size:.95rem;font-family:inherit;}
+  .rfq textarea{grid-column:1/-1;min-height:90px;resize:vertical;}
+  .rfq button{grid-column:1/-1;background:var(--navy);color:#fff;border:none;padding:16px;border-radius:5px;font-size:1.05rem;font-weight:800;cursor:pointer;}
+  .rfq button:hover{background:var(--navy-dark);}
+  .rfq .alt-contact{margin-top:18px;font-size:.95rem;}
+  .rfq .alt-contact a{color:#fff;font-weight:700;}
+
+  /* Footer */
+  footer{background:var(--navy-dark);color:#b9bcdc;padding:36px 0;font-size:.9rem;}
+  footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:16px;align-items:center;}
+  footer a{color:#fff;text-decoration:none;font-weight:600;}
+  .fine{font-size:.78rem;color:#8a8db4;margin-top:10px;}
+
+  @media(max-width:860px){
+    .hero .wrap,.partnership .wrap,.board-flex{grid-template-columns:1fr;}
+    .grid,.grid-4{grid-template-columns:1fr 1fr;}
+    .app-list{grid-template-columns:1fr;}
+    .hero h1{font-size:2rem;}
+    .rfq form{grid-template-columns:1fr;}
+  }
+  @media(max-width:560px){
+    .grid,.grid-4{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<!-- ===== Site header: recreated from hasco-inc.com ===== -->
+<div class="util">
+  <div class="wrap">
+    <span><a href="https://blog.hasco-inc.com/">Blog</a> <span class="sep">|</span> <a href="https://www.hasco-inc.com/contact/">Contact Us</a></span>
+    <span><a href="https://www.hasco-inc.com/login.php">Login</a> or <a href="https://www.hasco-inc.com/login.php?action=create_account">Register</a></span>
+    <span><a href="https://www.hasco-inc.com/cart.php">🛒 Cart</a></span>
+  </div>
+</div>
+
+<div class="masthead">
+  <div class="wrap">
+    <div class="brand">
+      <a href="https://www.hasco-inc.com/"><img src="data:image/png;base64,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" alt="HASCO RF Solutions"></a>
+      <div><small>A Quality Source for RF and Microwave Engineers</small></div>
+    </div>
+    <div class="searchbox">
+      <input type="search" placeholder="Search products…">
+      <button aria-label="Search">🔍</button>
+    </div>
+    <div class="mast-contact">
+      <a href="mailto:sales@hasco-inc.com">✉ sales@hasco-inc.com</a><br>
+      <a href="tel:8884983242">📞 888-498-3242</a>
+    </div>
+  </div>
+</div>
+
+<nav class="mainnav">
+  <div class="wrap">
+    <ul>
+      <li><a href="https://www.hasco-inc.com/categories/">Products <span class="caret">▼</span></a></li>
+      <li><a href="https://www.hasco-inc.com/pages/quality-system.html">Quality System</a></li>
+      <li><a href="https://www.hasco-inc.com/blog/tag/Technical+Articles">Tools &amp; Resources</a></li>
+      <li><a href="https://www.hasco-inc.com/about/">About <span class="caret">▼</span></a></li>
+    </ul>
+    <ul>
+      <li><a class="nav-rfq" href="https://www.hasco-inc.com/rfq/">Request a Quote</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="partner-strip">
+  <div class="wrap">
+    <span>Authorized Distribution Partner</span>
+    <span class="sm">SIGNAL MICROWAVE</span>
+    <span>Precision. Performance. Trusted Results.</span>
+  </div>
+</div>
+
+<section class="hero">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">New Product Line · GigaProbes® by Signal Microwave</span>
+      <h1>True 100&nbsp;Ohm Differential Probes, <em>40 to 110&nbsp;GHz</em></h1>
+      <p class="lead">GigaProbes® FPP-series differential probes deliver accurate, repeatable on-board measurements for signal integrity validation, BGA probing, de-embedding, and failure analysis — no ground pins required. Now stocked and supported through HASCO RF Solutions.</p>
+      <a class="btn btn-orange" href="#rfq">Request a Quote</a>
+      <a class="btn btn-outline" href="#products">View the Probe Series</a>
+      <div class="hero-stats">
+        <div><strong>110+ GHz</strong><span>Proven capability, validated at 40&nbsp;GHz+</span></div>
+        <div><strong>100 Ω</strong><span>True differential design</span></div>
+        <div><strong>3 pitches</strong><span>0.60 / 0.80 / 1.0&nbsp;mm options</span></div>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <div class="img-placeholder">[ Product photo: GigaProbes® FPP70 probes on PCB — from HASCO flyer ]</div>
+      <div class="banner">True 100 Ohm Differential Probes</div>
+      <p class="probe-art">Signal Microwave GigaProbes® FPP series — precision engineered for high-speed measurement applications through 70+&nbsp;GHz.</p>
+    </div>
+  </div>
+</section>
+
+<section id="products" class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">The Product Line</span>
+      <h2>GigaProbes® FPP Fixed-Pitch Probe Series</h2>
+      <p>Four frequency families, multiple pin pitches, custom pin lengths available. Every probe uses a true 100&nbsp;Ohm differential design with no ground pins and pins perpendicular to the probe body for accurate, repeatable contact.</p>
+    </div>
+    <table>
+      <thead>
+        <tr><th>Series</th><th>Bandwidth</th><th>Pin Pitch Options</th><th>Typical Use</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>FPP40</strong></td><td class="freq">40 GHz</td>
+          <td><span class="pill">0.6 mm</span><span class="pill">0.8 mm</span><span class="pill">1.0 mm</span></td>
+          <td>SI validation, TDR &amp; S-parameter measurement</td>
+          <td><a class="rfq-link" href="#rfq">Get quote →</a></td>
+        </tr>
+        <tr>
+          <td><strong>FPP50</strong></td><td class="freq">50 GHz</td>
+          <td><span class="pill">0.6 mm</span><span class="pill">0.8 mm</span><span class="pill">1.0 mm</span></td>
+          <td>Higher-bandwidth board and interconnect validation</td>
+          <td><a class="rfq-link" href="#rfq">Get quote →</a></td>
+        </tr>
+        <tr>
+          <td><strong>FPP70</strong></td><td class="freq">70 GHz</td>
+          <td><span class="pill">0.6 mm</span><span class="pill">0.8 mm</span><span class="pill">1.0 mm</span></td>
+          <td>Precise VNA differential measurements up to 70&nbsp;GHz</td>
+          <td><a class="rfq-link" href="#rfq">Get quote →</a></td>
+        </tr>
+        <tr>
+          <td><strong>FPP110</strong></td><td class="freq">110 GHz</td>
+          <td><span class="pill">0.6 mm</span><span class="pill">0.8 mm</span></td>
+          <td>mmWave characterization at the leading edge</td>
+          <td><a class="rfq-link" href="#rfq">Get quote →</a></td>
+        </tr>
+        <tr>
+          <td><strong>FPP Test Evaluation Board</strong></td><td class="freq">40–100 GHz</td>
+          <td colspan="2">Probe test board for FPP probe series — 40/50/70/100&nbsp;GHz bandwidth</td>
+          <td><a class="rfq-link" href="#rfq">Get quote →</a></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Why GigaProbes®</span>
+      <h2>Precision engineered for measurement accuracy</h2>
+    </div>
+    <div class="grid">
+      <div class="card"><div class="icon">Ω</div><h3>True 100 Ohm Differential</h3><p>Genuine 100&nbsp;Ohm differential design — not a compromise topology — for accurate and repeatable differential impedance and S-parameter results.</p></div>
+      <div class="card"><div class="icon">⏚</div><h3>No Ground Pins</h3><p>Probe differential lines without hunting for a ground reference. Pins are perpendicular to the probe body for consistent, positive contact.</p></div>
+      <div class="card"><div class="icon">⇲</div><h3>De-Embedded Accuracy</h3><p>Validated performance with de-embedding for measurement accuracy — consistent, ripple-free results across the band, probe to probe.</p></div>
+      <div class="card"><div class="icon">✎</div><h3>Custom Pin Lengths</h3><p>Custom pin lengths available, with 0.60, 0.80, and 1.0&nbsp;mm pitch options to match your pad geometry.</p></div>
+      <div class="card"><div class="icon">▦</div><h3>Probe Station Ready</h3><p>Multiple-axis positioning support for accurate on-board probing in bench and probe-station setups.</p></div>
+      <div class="card"><div class="icon">✓</div><h3>Patented &amp; Proven</h3><p>Patented Signal Microwave probe technology (US 10,852,322 · 11,175,311) with proven measurements at 40&nbsp;GHz and 110+&nbsp;GHz capability.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt">
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Applications</span>
+      <h2>Built for high-speed measurement work</h2>
+    </div>
+    <div class="app-list">
+      <div><strong>Signal integrity validation</strong> — verify PCB differential impedance and S-parameter performance</div>
+      <div><strong>BGA probing</strong> — reach fine-pitch geometries with fixed-pitch precision tips</div>
+      <div><strong>VNA differential testing</strong> — precise differential measurements up to 70&nbsp;GHz</div>
+      <div><strong>De-embedding &amp; fixture removal</strong> — isolate the DUT from board and probe effects</div>
+      <div><strong>TDR impedance measurement</strong> — verify impedance along a transmission line</div>
+      <div><strong>Failure analysis</strong> — repeatable on-board measurements for root-cause work</div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">
+      <span class="eyebrow">Also Available</span>
+      <h2>VNA calibration &amp; verification test boards</h2>
+      <p>Signal Microwave and GigaProbes® high-frequency test boards give your VNA a known, golden-unit response over frequency — so you can verify calibrations, catch measurement drift, and train engineers on advanced calibration techniques.</p>
+    </div>
+    <div class="board-flex">
+      <div class="card navy">
+        <div class="icon">40</div>
+        <h3>40 &amp; 70 GHz Verification Boards</h3>
+        <p>50&nbsp;Ohm through lines, a 25&nbsp;Ohm Beatty section for TDR verification, and 100&nbsp;Ohm differential lines — including connector-to-probe lines for evaluating each probe. Built on 8-mil Rogers RO4003 with ENIG finish and Signal Microwave edge-launch connectors, with magnetic feet for secure bench positioning.</p>
+      </div>
+      <div class="card navy">
+        <div class="icon">LRL</div>
+        <h3>LRL &amp; LRM Calibration Boards</h3>
+        <p>A hardware alternative to software de-embedding: a 40&nbsp;GHz LRM board with probe test pads sets the reference plane at the probe tips, and a 70&nbsp;GHz LRL board with 3&Prime; traces supports training on advanced VNA calibration techniques.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="partnership">
+  <div class="wrap">
+    <div>
+      <span class="eyebrow">The Partnership</span>
+      <h2>HASCO RF + Signal Microwave: <span>Partnering for Performance</span></h2>
+      <p>HASCO RF Solutions is an authorized distribution partner for Signal Microwave GigaProbes® differential probe solutions — pairing Signal Microwave's precision probe engineering with HASCO's four decades of RF/microwave distribution, stocking, and technical support.</p>
+      <p>One more way HASCO delivers engineered solutions across DC to 145+&nbsp;GHz — RF, microwave &amp; mmWave.</p>
+    </div>
+    <div class="trust-grid">
+      <div><strong>Authorized Partner</strong><span>Factory-authorized distribution of GigaProbes® probe solutions</span></div>
+      <div><strong>Quality Assured</strong><span>AS9120:B &amp; ISO 9001:2015 certified distribution</span></div>
+      <div><strong>Technical Expertise</strong><span>Spec-literate support to match probes to your application</span></div>
+      <div><strong>Ready to Support</strong><span>Stocking, logistics, and responsive quoting through HASCO</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="rfq" id="rfq">
+  <div class="wrap">
+    <h2>Request a GigaProbes® Quote</h2>
+    <p>Tell us your bandwidth, pin pitch, and application — our team will respond with pricing, availability, and configuration guidance.</p>
+    <form action="#" method="post">
+      <input type="text" name="name" placeholder="Full name *" required>
+      <input type="text" name="company" placeholder="Company *" required>
+      <input type="email" name="email" placeholder="Work email *" required>
+      <input type="tel" name="phone" placeholder="Phone">
+      <select name="series">
+        <option value="">Probe series of interest…</option>
+        <option>FPP40 — 40 GHz</option>
+        <option>FPP50 — 50 GHz</option>
+        <option>FPP70 — 70 GHz</option>
+        <option>FPP110 — 110 GHz</option>
+        <option>Test / calibration boards</option>
+        <option>Not sure — need guidance</option>
+      </select>
+      <select name="pitch">
+        <option value="">Pin pitch…</option>
+        <option>0.60 mm</option>
+        <option>0.80 mm</option>
+        <option>1.0 mm</option>
+        <option>Custom / unsure</option>
+      </select>
+      <textarea name="details" placeholder="Application details — DUT, frequency range, quantity, timeline…"></textarea>
+      <button type="submit">Submit Quote Request</button>
+    </form>
+    <p class="alt-contact">Prefer to talk? Call <a href="tel:8884983242">888.498.3242</a> or email <a href="mailto:sales@hasco-inc.com">sales@hasco-inc.com</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div>
+      <strong style="color:#fff;">HASCO RF Solutions</strong> — Probe solutions provider<br>
+      <span class="fine">GigaProbes® is a registered trademark of its respective owner. Signal Microwave product names and marks are property of Signal Microwave.</span>
+    </div>
+    <div>
+      <a href="https://www.hasco-inc.com">www.hasco-inc.com</a> &nbsp;|&nbsp;
+      <a href="tel:8884983242">888.498.3242</a> &nbsp;|&nbsp;
+      <a href="mailto:sales@hasco-inc.com">sales@hasco-inc.com</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
